@@ -50,7 +50,7 @@ jak± masow± pocztê zamawiali.
 Summary:	Tools to access a DCC server
 Summary(pl):	Narzêdzia dostêpowe dla serwera DCC
 Group:		Networking
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description client
 Distributed Checksum Clearinghouse or DCC is a cooperative,
@@ -86,7 +86,7 @@ jak± masow± pocztê zamawiali.
 Summary:	DCC Server
 Summary(pl):	Serwer DCC
 Group:		Networking
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description server
 Distributed Checksum Clearinghouse or DCC is a cooperative,
@@ -119,13 +119,13 @@ Za bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±,
 jak± masow± pocztê zamawiali.
 
 %package cgi
-Summary:	cgi-scripts for managing mail delivery on a DCC enabled server
-Summary(pl):	Skrypty cgi do obs³ugi dostarczania poczty na serwerze DCC
+Summary:	CGI scripts for managing mail delivery on a DCC enabled server
+Summary(pl):	Skrypty CGI do obs³ugi dostarczania poczty na serwerze DCC
 Group:		Networking
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description cgi
-Example set of cgi-scripts to allow users to point-and-click manage
+Example set of CGI scripts to allow users to point-and-click manage
 their own DCC whitelists and thus what is delivered to them. Allows
 overriding of site level lists. The scripts give controlled access to
 the whitelists which are otherwise in protected directory space (owned
@@ -134,7 +134,7 @@ by dcc).
 NB these scripts need configured after installation.
 
 %description cgi -l pl
-Przyk³adowy zestaw skryptów pozwalaj±cych u¿ytkownikom na klikane
+Przyk³adowy zestaw skryptów CGI pozwalaj±cych u¿ytkownikom na klikane
 zarz±dzenie ich bia³ymi listami DCC, a wiêc i tym, co dostaj±. Pozwala
 przykrywaæ listy dotycz±ce serwera. Skrypty daj± dostêp do bia³ych
 list, które normalnie s± w zabezpieczonym katalogu (którego
@@ -233,7 +233,7 @@ rm -f $RPM_BUILD_ROOT%{_sbindir}/updatedcc
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-/usr/sbin/useradd -d /var/dcc -r dcc >/dev/null 2>&1 || :
+/usr/sbin/useradd -d %{dccdir} -r dcc >/dev/null 2>&1
 
 %postun
 if [ $1 = 0 ]; then
@@ -241,10 +241,9 @@ if [ $1 = 0 ]; then
 fi
 
 %post
-/sbin/chkconfig --add dccd || :
-/sbin/chkconfig --level 016 dccd off || :
+/sbin/chkconfig --add dccd
 umask 022
-/usr/bin/cdcc info > %{dccdir}/map.txt || :
+/usr/bin/cdcc info > %{dccdir}/map.txt
 
 %post cgi
 echo The scripts need configured and added into your web configuration.
