@@ -69,7 +69,7 @@ from sources in a "white list." White lists are generally the
 responsibility of DCC clients, since only they know which bulk mail
 they solicited.
 
-%description -l pl client
+%description client -l pl
 DCC (Distributed Checksum Clearinghouse) jest kooperatywnym,
 rozproszonym systemem maj±cym na celu wykrywanie masowej poczty lub
 poczty wys³anej do wielu ludzi. Pozwala jednostkom otrzymuj±cym
@@ -105,7 +105,7 @@ from sources in a "white list." White lists are generally the
 responsibility of DCC clients, since only they know which bulk mail
 they solicited.
 
-%description -l pl server
+%description server -l pl
 DCC (Distributed Checksum Clearinghouse) jest kooperatywnym,
 rozproszonym systemem maj±cym na celu wykrywanie masowej poczty lub
 poczty wys³anej do wielu ludzi. Pozwala jednostkom otrzymuj±cym
