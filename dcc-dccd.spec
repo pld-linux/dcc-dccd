@@ -82,7 +82,7 @@ Te skrypty wymagaj± konfiguracji po zainstalowaniu.
 %build
 %configure2_13 \
 	--with-uid=99 \
-	--with-cgibin=/home/httpd/html/cgi-bin \
+	--with-cgibin=/home/services/httpd/html/cgi-bin \
 	--with-rundir=%{_var}/run \
 	--with-db-memory=32
 %{__make}
