@@ -10,7 +10,6 @@ URL:		http://www.dcc-servers.net/
 Requires(pre):	/usr/sbin/useradd
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/userdel
-Prereq:		/sbin/chkconfig
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dccdir	/var/lib/dcc
@@ -148,6 +147,7 @@ fi
 %post
 /sbin/chkconfig --add dccd || :
 /sbin/chkconfig --level 016 dccd off || :
+umask 022
 /usr/bin/cdcc info > %{dccdir}/map.txt || :
 
 %post cgi
