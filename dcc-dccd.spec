@@ -7,9 +7,13 @@ License:	BSD-like
 Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
 URL:		http://www.dcc-servers.net/
+Requires(pre):	/usr/sbin/useradd
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/userdel
 Prereq:		/sbin/chkconfig
-Prereq:		/usr/sbin/useradd
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		dccdir	/var/lib/dcc
 
 %description
 Distributed Checksum Clearinghouse or DCC is a cooperative,
@@ -26,13 +30,32 @@ from sources in a "white list." White lists are generally the
 responsibility of DCC clients, since only they know which bulk mail
 they solicited.
 
-NB to use DCC to reject SPAM you need to configure /var/dcc/dcc_conf
-and either use procmail or sendmail to feed the messages to DCC
+NB to use DCC to reject SPAM you need to configure %{dccdir}/dcc_conf
+and either use procmail or sendmail to feed the messages to DCC.
+
+%description -l pl
+DCC (Distributed Checksum Clearinghouse) jest kooperatywnym,
+rozproszonym systemem maj±cym na celu wykrywanie masowej poczty lub
+poczty wys³anej do wielu ludzi. Pozwala jednostkom otrzymuj±cym
+pojedynczy list okre¶liæ, jak wielu innych otrzyma³o dok³adnie
+identyczne kopie tej wiadomo¶ci i na tej podstawie odrzuciæ j±. Mo¿e
+zidentyfikowaæ niechcian± masow± pocztê przy u¿yciu "pu³apek
+antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
+
+DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
+zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
+przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy".
+Za bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±,
+jak± masow± pocztê zamawiali.
+
+Aby u¿ywaæ DCC do odrzucania spamu trzeba go skonfigurowaæ poprzez
+%{dccdir}/dcc_conf i u¿ywaæ procmaila lub sendmaila, by przekazywaæ
+wszystkie listy do DCC.
 
 %package cgi
 Summary:	cgi-scripts for managing mail delivery on a DCC enabled server
-Group:		Networking/Mail
-######		Unknown group!
+Summary(pl):	Skrypty cgi do obs³ugi dostarczania poczty na serwerze DCC
+Group:		Networking
 Requires:	%{name} >= 1.1.2
 
 %description cgi
@@ -42,7 +65,16 @@ overriding of site level lists. The scripts give controlled access to
 the whitelists which are otherwise in protected directory space (owned
 by dcc).
 
-NB these scripts need configured after installation
+NB these scripts need configured after installation.
+
+%description cgi -l pl
+Przyk³adowy zestaw skryptów pozwalaj±cych u¿ytkownikom na klikane
+zarz±dzenie ich bia³ymi listami DCC, a wiêc i tym, co dostaj±. Pozwala
+przykrywaæ listy dotycz±ce serwera. Skrypty daj± dostêp do bia³ych
+list, które normalnie s± w zabezpieczonym katalogu (którego
+w³a¶cicielem jest DCC).
+
+Te skrypty wymagaj± konfiguracji po zainstalowaniu.
 
 %prep
 %setup -q
@@ -66,12 +98,14 @@ rm -rf $RPM_BUILD_ROOT
 	MANDIR=$RPM_BUILD_ROOT%{_mandir} \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir}
 
+DCC_PROTO_HOMEDIR=$RPM_BUILD%{_var}/lib/dcc
+DCC_CGIBINDIR=$RPM_BUILD_ROOT%{dccdir}/cgi-bin; export DCC_CGIBINDIR
+DCC_SUID=$BINOWN DCC_OWN=$BINOWN DCC_GRP=$BINGRP; export DCC_SUID DCC_OWN DCC_GRP
 
-	DCC_PROTO_HOMEDIR=$RPM_BUILD%{_var}/lib/dcc
-	DCC_CGIBINDIR=$RPM_BUILD_ROOT/var/dcc/cgi-bin export DCC_CGIBINDIR
-DCC_SUID=$BINOWN DCC_OWN=$BINOWN DCC_GRP=$BINGRP export DCC_SUID DCC_OWN DCC_GRP
 install -d $RPM_BUILD_ROOT%{_datadir}/sendmail-cf/feature $DCC_CGIBINDIR
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{init.d,cron.daily} $RPM_BUILD_ROOT/{var/{run/dcc,dcc/{log,userdirs/{local,esmtp,cyrus,procmail}}},usr/bin}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{init.d,cron.daily},%{_bindir}} \
+	$RPM_BUILD_ROOT{/var/run/dcc,%{dccdir}/{log,userdirs/{local,esmtp,cyrus,procmail}}}
+
 %makeinstall
 cp misc/dcc.m4 misc/dccdnsbl.m4 $RPM_BUILD_ROOT/usr/share/sendmail-cf/feature
 mv $RPM_BUILD_ROOT/usr/sbin/cron-dccd $RPM_BUILD_ROOT/etc/cron.daily/dccd
@@ -85,15 +119,15 @@ rm -f $RPM_BUILD_ROOT/usr/sbin/hackmc
 rm -f $RPM_BUILD_ROOT/usr/sbin/na-spam
 rm -f $RPM_BUILD_ROOT/usr/sbin/ng-spam
 
-mv $RPM_BUILD_ROOT/usr/sbin/rcDCC $RPM_BUILD_ROOT/etc/init.d/dccd
+mv $RPM_BUILD_ROOT/usr/sbin/rcDCC $RPM_BUILD_ROOT/etc/rc.d/init.d/dccd
 chmod 755 $RPM_BUILD_ROOT/etc/init.d/dccd
 
 # Set some initial logging, but no rejections
 perl -p -i -e "s/BRAND=\$/BRAND=RPMDEFAULT/ ; s/DCCM_LOG_AT=\$/\$&10/ ; " \
-	$RPM_BUILD_ROOT/var/dcc/dcc_conf
+	$RPM_BUILD_ROOT%{dccdir}/dcc_conf
 
 umask 077
-cat > $RPM_BUILD_ROOT/var/dcc/flod <<EOF
+cat > $RPM_BUILD_ROOT%{dccdir}/flod <<EOF
 # hostname,port     rem-id [passwd-id] [out-opts] [in-opts]
 
 # this will not work
@@ -114,45 +148,40 @@ fi
 %post
 /sbin/chkconfig --add dccd || :
 /sbin/chkconfig --level 016 dccd off || :
-/usr/bin/cdcc info > /var/lib/dcc/map.txt || :
+/usr/bin/cdcc info > %{dccdir}/map.txt || :
 
 %post cgi
 echo The scripts need configured and added into your web configuration.
-echo see /var/dcc/cgi-bin/README
-
+echo see %{dccdir}/cgi-bin/README
 
 %preun
 if [ $1 = 0 ]; then
-	#
-	# This is remove rather than update
-	#
 	/sbin/chkconfig --del dccd || :
-	/etc/init.d/dccd stop || :
+	/etc/rc.d/init.d/dccd stop || :
 fi
 
 %files
 %defattr(644,root,root,755)
-
-%dir	/var/dcc
-%dir	/var/dcc/log
-%dir	/var/dcc/userdirs/local
-%dir	/var/dcc/userdirs/cyrus
-%dir	/var/dcc/userdirs/procmail
-%dir	/var/dcc/userdirs/esmtp
-%dir	/var/run/dcc
+%dir %{dccdir}
+%dir %{dccdir}/log
+%dir %{dccdir}/userdirs/local
+%dir %{dccdir}/userdirs/cyrus
+%dir %{dccdir}/userdirs/procmail
+%dir %{dccdir}/userdirs/esmtp
+%dir /var/run/dcc
 %doc CHANGES FAQ.html FAQ.txt INSTALL.html INSTALL.txt LICENSE cdcc.html dbclean.html dblist.html dccd.html dcc.html dccm.html dccproc.html dccsight.html homedir/flod homedir/ids homedir/map.txt homedir/README misc/dcc.m4 misc/dccdnsbl.m4 misc/hackmc misc/na-spam misc/ng-spam
-%config(noreplace)	/var/dcc/dcc_conf
-%config(noreplace)	/var/dcc/whiteclnt
-%config(noreplace)	/var/dcc/whitecommon
-%config(noreplace)	/var/dcc/whitelist
-%config(noreplace)	/var/dcc/ids
-%config(noreplace)	/var/dcc/flod
-%config(noreplace)	/var/dcc/dcc_db
-%config(noreplace)	/var/dcc/dcc_db.hash
-%config(noreplace)	/var/dcc/map
-/var/dcc/map.txt
-%{_sysconfdir}/init.d/dccd
-/etc/cron.daily/dccd
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_conf
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/whiteclnt
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/whitecommon
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/whitelist
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/ids
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/flod
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_db
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_db.hash
+%config(noreplace) %verify(not size mtime md5) %{dccdir}/map
+%{dccdir}/map.txt
+%attr(754,root,root) /etc/rc.d/init.d/dccd
+%attr(750,root,root) /etc/cron.daily/dccd
 %attr(755,root,root) %{_bindir}/cdcc
 %attr(755,root,root) %{_bindir}/dccproc
 %attr(755,root,root) %{_sbindir}/dbclean
@@ -172,12 +201,12 @@ fi
 
 %files cgi
 %defattr(644,root,root,755)
-%dir	/var/dcc/cgi-bin
-/var/dcc/cgi-bin/chgpasswd
-/var/dcc/cgi-bin/common
-/var/dcc/cgi-bin/edit-whiteclnt
-/var/dcc/cgi-bin/http2https
-/var/dcc/cgi-bin/list-log
-/var/dcc/cgi-bin/list-msg
-/var/dcc/cgi-bin/README
-/var/dcc/cgi-bin/webuser-notify
+%dir %{dccdir}/cgi-bin
+%{dccdir}/cgi-bin/chgpasswd
+%{dccdir}/cgi-bin/common
+%{dccdir}/cgi-bin/edit-whiteclnt
+%{dccdir}/cgi-bin/http2https
+%{dccdir}/cgi-bin/list-log
+%{dccdir}/cgi-bin/list-msg
+%{dccdir}/cgi-bin/README
+%{dccdir}/cgi-bin/webuser-notify
