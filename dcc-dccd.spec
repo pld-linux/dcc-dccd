@@ -1,12 +1,12 @@
 Summary:	Distributed Checksum Clearinghouse, anti-spam tool
 Summary(pl):	Narzêdzie anty-spamowe bazuj±ce na sumach kontrolnych (DCC)
 Name:		dcc-dccd
-Version:	1.2.32
+Version:	1.2.50
 Release:	1
 License:	BSD-like
 Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
-# Source0-md5:	7cb772a9f128ce79c23f5961e1954698
+# Source0-md5:	676b17dca43a3dabe22c057a6cfdde77
 URL:		http://www.dcc-servers.net/
 Requires(pre):	/usr/sbin/useradd
 Requires(postun):	/usr/sbin/userdel
@@ -146,8 +146,13 @@ Te skrypty wymagaj± konfiguracji po zainstalowaniu.
 %setup -q
 
 %build
-%configure2_13 \
-	--prefix=%{dccdir} \
+CFLAGS="%{rpmcflags}"; export CFLAGS
+LDFLAGS="%{rpmldflags}"; export LDFLAGS
+./configure \
+	--bindir=%{_bindir} \
+	--libexecdir=%{_libexecdir} \
+	--mandir=%{_mandir} \
+	--homedir=%{dccdir} \
 	--with-uid=99 \
 	--with-cgibin=%{cgidir} \
 	--with-rundir=%{_var}/run \
@@ -177,7 +182,8 @@ INST_UID="$( id -u )" INST_GID="$( id -g )"; export INST_UID INST_GID
 	BINOWN=$INST_UID \
 	GRP=$INST_GID \
 	INSTALL="install -C" \
-	DCC_PROTO_HOMEDIR=$RPM_BUILD_ROOT%{dccdir} \
+	INST_BINDIR=$RPM_BUILD_ROOT%{cgidir} \
+	DCC_HOMEDIR=$RPM_BUILD_ROOT%{dccdir} \
 	DCC_CGIBINDIR=$RPM_BUILD_ROOT%{cgidir} \
 	DCC_LIBEXECDIR=$RPM_BUILD_ROOT%{_sbindir} \
 	DCC_BINDIR=$RPM_BUILD_ROOT%{_sbindir} \
@@ -255,7 +261,7 @@ fi
 %doc CHANGES FAQ.html FAQ.txt INSTALL.html INSTALL.txt LICENSE cdcc.html
 %doc dbclean.html dblist.html dccd.html dcc.html dccproc.html
 %doc dccsight.html homedir/flod homedir/ids homedir/map.txt homedir/README
-%doc misc/dcc.m4 misc/dccdnsbl.m4 misc/hackmc misc/na-spam misc/ng-spam
+%doc misc/dcc.m4 misc/dccdnsbl.m4 misc/hackmc
 #%doc dccm.html 
 %dir %{dccdir}
 %dir %{dccdir}/log
@@ -301,10 +307,7 @@ fi
 %attr(755,root,root) %{_sbindir}/dccifd
 %attr(755,root,root) %{_sbindir}/fetch-testmsg-whitelist
 %attr(755,root,root) %{_sbindir}/hackmc
-%attr(755,root,root) %{_sbindir}/na-spam
 %attr(755,root,root) %{_sbindir}/newwebuser
-%attr(755,root,root) %{_sbindir}/ng-spam
-%attr(755,root,root) %{_sbindir}/refeed
 %attr(755,root,root) %{_sbindir}/wlist
 # sendmail stuff
 #%attr(755,root,root) %{_sbindir}/dccm
