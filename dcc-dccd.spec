@@ -184,7 +184,7 @@ install homedir/flod $RPM_BUILD_ROOT%{dccdir}/flod
 for i in dbclean dblist dccd dccifd dccsight wlist; do
     mv -f $RPM_BUILD_ROOT%{_bindir}/$i $RPM_BUILD_ROOT%{_sbindir}/
 done
-mv -f $RPM_BUILD_ROOT%{dccdir}
+#mv -f $RPM_BUILD_ROOT%{dccdir}
 # install extras
 install dccifd/dccif-test/dccif-test $RPM_BUILD_ROOT%{_sbindir}/
 install dccifd/dccif-test/dccif-test.pl $RPM_BUILD_ROOT%{_sbindir}/
