@@ -2,7 +2,7 @@ Summary:	Distributed Checksum Clearinghouse, anti-spam tool
 Summary(pl):	Narzêdzie anty-spamowe bazuj±ce na sumach kontrolnych (DCC)
 Name:		dcc-dccd
 Version:	1.2.27
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
@@ -14,7 +14,7 @@ Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dccdir	/var/lib/dcc
-%define		cgidir	/home/services/httpd/cgi-bin
+%define		cgidir	/srv/httpd/cgi-bin
 
 %description
 Distributed Checksum Clearinghouse or DCC is a cooperative,
