@@ -237,7 +237,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun
 if [ $1 = 0 ]; then
-        /usr/sbin/userdel -r dcc > /dev/null 2>&1 || :
+	/usr/sbin/userdel -r dcc > /dev/null 2>&1 || :
 fi
 
 %post
