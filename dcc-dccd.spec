@@ -11,8 +11,8 @@ Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
 # Source0-md5:	b60fb65d881ecd3ded23b84ee2e01803
 URL:		http://www.dcc-servers.net/
-Requires(pre): /usr/sbin/useradd
-Requires(postun):      /usr/sbin/userdel
+Requires(pre):	/usr/sbin/useradd
+Requires(postun):	/usr/sbin/userdel
 Requires(post,preun):	/sbin/chkconfig
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
