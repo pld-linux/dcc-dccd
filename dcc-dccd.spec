@@ -6,6 +6,7 @@ Release:	1
 License:	BSD-like
 Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
+# Source0-md5:	1bea2f828026e69902bb2fcf60cc702f
 URL:		http://www.dcc-servers.net/
 Requires(pre): /usr/sbin/useradd
 Requires(postun):      /usr/sbin/userdel
