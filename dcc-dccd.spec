@@ -7,7 +7,8 @@ License:	BSD-like
 Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
 URL:		http://www.dcc-servers.net/
-Requires(pre):	user-dcc
+Requires(pre): /usr/sbin/useradd
+Requires(postun):      /usr/sbin/userdel
 Requires(post,preun):	/sbin/chkconfig
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -134,6 +135,14 @@ EOF
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+/usr/sbin/useradd -d /var/dcc -r dcc >/dev/null 2>&1 || :
+
+%postun
+if [ $1 = 0 ]; then
+        /usr/sbin/userdel -r dcc > /dev/null 2>&1 || :
+fi
 
 %post
 /sbin/chkconfig --add dccd || :
