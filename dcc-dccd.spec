@@ -5,8 +5,9 @@ Version:	1.1.14
 Release:	1
 License:	BSD-like
 Group:		Networking
-Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
-# Source0-md5:	1bea2f828026e69902bb2fcf60cc702f
+#Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
+Source0:	%{name}-%{version}.tar.Z
+# Source0-md5:	5b17974c039b9f0e646e36d86a476b52
 URL:		http://www.dcc-servers.net/
 Requires(pre): /usr/sbin/useradd
 Requires(postun):      /usr/sbin/userdel
