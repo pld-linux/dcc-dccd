@@ -14,6 +14,7 @@ Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dccdir	/var/lib/dcc
+%define		cgidir	/home/services/httpd/cgi-bin
 
 %description
 Distributed Checksum Clearinghouse or DCC is a cooperative,
@@ -49,7 +50,7 @@ jak± masow± pocztê zamawiali.
 Summary:	Tools to access a DCC server
 Summary(pl):	Narzêdzia dostêpowe dla serwera DCC
 Group:		Networking
-Requires:	%{name} >= 1.1.2
+Requires:	%{name} = %{version}
 
 %description client
 Distributed Checksum Clearinghouse or DCC is a cooperative,
@@ -146,11 +147,12 @@ Te skrypty wymagaj± konfiguracji po zainstalowaniu.
 
 %build
 %configure2_13 \
-	--prefix=%{_var}/lib/dcc \
+	--prefix=%{dccdir} \
 	--with-uid=99 \
-	--with-cgibin=/home/services/httpd/html/cgi-bin \
+	--with-cgibin=%{cgidir} \
 	--with-rundir=%{_var}/run \
 	--with-db-memory=32
+
 %{__make}
 %{__make} -C dccifd/dccif-test
 
@@ -167,10 +169,16 @@ install -d $RPM_BUILD_ROOT%{_includedir}/dcc
 INST_UID="$( id -u )" INST_GID="$( id -g )"; export INST_UID INST_GID
 
 %{makeinstall} \
-	MANOWN=$INST_UID MANGRP=$INST_GID DCC_SUID=$INST_UID DCC_OWN=$INST_UID \
-	DCC_GRP=$INST_GID BINOWN=$INST_UID GRP=$INST_GID INSTALL="install -C" \
+	MANOWN=$INST_UID \
+	MANGRP=$INST_GID \
+	DCC_SUID=$INST_UID \
+	DCC_OWN=$INST_UID \
+	DCC_GRP=$INST_GID \
+	BINOWN=$INST_UID \
+	GRP=$INST_GID \
+	INSTALL="install -C" \
 	DCC_PROTO_HOMEDIR=$RPM_BUILD_ROOT%{dccdir} \
-	DCC_CGIBINDIR=$RPM_BUILD_ROOT/home/services/http/html/cgi-bin \
+	DCC_CGIBINDIR=$RPM_BUILD_ROOT%{cgidir} \
 	DCC_LIBEXECDIR=$RPM_BUILD_ROOT%{_sbindir} \
 	DCC_BINDIR=$RPM_BUILD_ROOT%{_sbindir} \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
@@ -182,13 +190,13 @@ install homedir/flod $RPM_BUILD_ROOT%{dccdir}/flod
 
 # move some binaries in place, wierd stuff...
 for i in dbclean dblist dccd dccifd dccsight wlist; do
-    mv -f $RPM_BUILD_ROOT%{_bindir}/$i $RPM_BUILD_ROOT%{_sbindir}/
+	mv -f $RPM_BUILD_ROOT%{_bindir}/$i $RPM_BUILD_ROOT%{_sbindir}
 done
-#mv -f $RPM_BUILD_ROOT%{dccdir}
+
 # install extras
-install dccifd/dccif-test/dccif-test $RPM_BUILD_ROOT%{_sbindir}/
-install dccifd/dccif-test/dccif-test.pl $RPM_BUILD_ROOT%{_sbindir}/
-install dccifd/dccif.pl $RPM_BUILD_ROOT%{_sbindir}/
+install dccifd/dccif-test/dccif-test $RPM_BUILD_ROOT%{_sbindir}
+install dccifd/dccif-test/dccif-test.pl $RPM_BUILD_ROOT%{_sbindir}
+install dccifd/dccif.pl $RPM_BUILD_ROOT%{_sbindir}
 
 # Set some initial logging, but no rejections
 perl -p -i -e "s/BRAND=\$/BRAND=%{version}-%{release}/ ; s/DCCM_LOG_AT=\$/\$&10/ ; " \
@@ -200,13 +208,13 @@ cp homedir/README README.homedir
 cp cgi-bin/README README.cgi-bin
 
 # install devel files
-install dccd/*.h $RPM_BUILD_ROOT%{_includedir}/dcc/
-install dcclib/*.h $RPM_BUILD_ROOT%{_includedir}/dcc/
-install include/*.h $RPM_BUILD_ROOT%{_includedir}/dcc/
-install srvrlib/*.h $RPM_BUILD_ROOT%{_includedir}/dcc/
-install dcclib/libdcc.a $RPM_BUILD_ROOT%{_libdir}/
-install srvrlib/libsrvr.a $RPM_BUILD_ROOT%{_libdir}/
-install thrlib/libthr.a $RPM_BUILD_ROOT%{_libdir}/
+install dccd/*.h $RPM_BUILD_ROOT%{_includedir}/dcc
+install dcclib/*.h $RPM_BUILD_ROOT%{_includedir}/dcc
+install include/*.h $RPM_BUILD_ROOT%{_includedir}/dcc
+install srvrlib/*.h $RPM_BUILD_ROOT%{_includedir}/dcc
+install dcclib/libdcc.a $RPM_BUILD_ROOT%{_libdir}
+install srvrlib/libsrvr.a $RPM_BUILD_ROOT%{_libdir}
+install thrlib/libthr.a $RPM_BUILD_ROOT%{_libdir}
 
 # house cleaning
 rm -f $RPM_BUILD_ROOT/var/www/dcc-bin/README
@@ -244,6 +252,11 @@ fi
 
 %files
 %defattr(644,root,root,755)
+%doc CHANGES FAQ.html FAQ.txt INSTALL.html INSTALL.txt LICENSE cdcc.html
+%doc dbclean.html dblist.html dccd.html dcc.html dccproc.html
+%doc dccsight.html homedir/flod homedir/ids homedir/map.txt homedir/README
+%doc misc/dcc.m4 misc/dccdnsbl.m4 misc/hackmc misc/na-spam misc/ng-spam
+#%doc dccm.html 
 %dir %{dccdir}
 %dir %{dccdir}/log
 %dir %{dccdir}/userdirs/local
@@ -251,11 +264,6 @@ fi
 %dir %{dccdir}/userdirs/procmail
 %dir %{dccdir}/userdirs/esmtp
 %dir /var/run/dcc
-%doc CHANGES FAQ.html FAQ.txt INSTALL.html INSTALL.txt LICENSE cdcc.html
-%doc dbclean.html dblist.html dccd.html dcc.html dccproc.html
-%doc dccsight.html homedir/flod homedir/ids homedir/map.txt homedir/README
-%doc misc/dcc.m4 misc/dccdnsbl.m4 misc/hackmc misc/na-spam misc/ng-spam
-#%doc dccm.html 
 %config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_conf
 %config(noreplace) %verify(not size mtime md5) %{dccdir}/whiteclnt
 %config(noreplace) %verify(not size mtime md5) %{dccdir}/whitecommon
@@ -270,12 +278,14 @@ fi
 %{dccdir}/grey_whitelist
 
 %files client
+%defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/cdcc
 %attr(4755,root,root) %{_bindir}/dccproc
-%{_mandir}/man8/cdcc.8.gz
-%{_mandir}/man8/dccproc.8.gz
+%{_mandir}/man8/cdcc.8*
+%{_mandir}/man8/dccproc.8*
 
 %files server
+%defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/dccd
 %attr(750,root,root) /etc/cron.daily/dccd
 %attr(4755,root,root) %{_sbindir}/dccsight
@@ -306,22 +316,21 @@ fi
 %attr(755,root,root) %{_sbindir}/start-grey
 %attr(755,root,root) %{_sbindir}/stats-get
 %attr(755,root,root) %{_sbindir}/stop-dccd
-%{_mandir}/man8/dbclean.8.gz
-%{_mandir}/man8/dblist.8.gz
-%{_mandir}/man8/dcc.8.gz
-%{_mandir}/man8/dccd.8.gz
-%{_mandir}/man8/dccifd.8.gz
-%{_mandir}/man8/dccm.8.gz
-%{_mandir}/man8/dccsight.8.gz
+%{_mandir}/man8/dbclean.8*
+%{_mandir}/man8/dblist.8*
+%{_mandir}/man8/dcc.8*
+%{_mandir}/man8/dccd.8*
+%{_mandir}/man8/dccifd.8*
+%{_mandir}/man8/dccm.8*
+%{_mandir}/man8/dccsight.8*
 
 %files cgi
 %defattr(644,root,root,755)
-%dir /home/services/http/html/cgi-bin
-/home/services/http/html/cgi-bin/chgpasswd
-/home/services/http/html/cgi-bin/common
-/home/services/http/html/cgi-bin/edit-whiteclnt
-/home/services/http/html/cgi-bin/http2https
-/home/services/http/html/cgi-bin/list-log
-/home/services/http/html/cgi-bin/list-msg
-/home/services/http/html/cgi-bin/README
-/home/services/http/html/cgi-bin/webuser-notify
+%{cgidir}/chgpasswd
+%{cgidir}/common
+%{cgidir}/edit-whiteclnt
+%{cgidir}/http2https
+%{cgidir}/list-log
+%{cgidir}/list-msg
+%{cgidir}/README
+%{cgidir}/webuser-notify
