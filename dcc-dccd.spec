@@ -1,12 +1,12 @@
 Summary:	Distributed Checksum Clearinghouse, anti-spam tool
 Summary(pl):	Narzêdzie anty-spamowe bazuj±ce na sumach kontrolnych (DCC)
 Name:		dcc-dccd
-Version:	1.2.30
-Release:	2
+Version:	1.2.32
+Release:	1
 License:	BSD-like
 Group:		Networking
 Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
-# Source0-md5:	45ffc79df178086999401dab35a2396c
+# Source0-md5:	7cb772a9f128ce79c23f5961e1954698
 URL:		http://www.dcc-servers.net/
 Requires(pre):	/usr/sbin/useradd
 Requires(postun):	/usr/sbin/userdel
