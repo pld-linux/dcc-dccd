@@ -10,9 +10,11 @@ Source0:	http://www.dcc-servers.net/dcc/source/%{name}-%{version}.tar.Z
 URL:		http://www.dcc-servers.net/
 BuildRequires:	fhs-compliance
 BuildRequires:	using-special-registered-not-regular-user
+BuildRequires:	rpmbuild(macros) >= 1.202
 Requires(pre):	/usr/sbin/useradd
 Requires(postun):	/usr/sbin/userdel
 Requires(post,preun):	/sbin/chkconfig
+Provides:	user(dcc)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dccdir	/var/lib/dcc
@@ -235,11 +237,12 @@ rm -f $RPM_BUILD_ROOT%{_sbindir}/updatedcc
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-/usr/sbin/useradd -d %{dccdir} -r dcc >/dev/null 2>&1
+# TODO register userid in uid_gid.db.txt
+%useradd -u XXX -d %{dccdir} -r dcc
 
 %postun
 if [ $1 = 0 ]; then
-	/usr/sbin/userdel -r dcc > /dev/null 2>&1 || :
+	%userremove dcc
 fi
 
 %post
