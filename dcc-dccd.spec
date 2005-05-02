@@ -46,9 +46,9 @@ antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
 
 DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
 zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
-przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy".
-Za bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±,
-jak± masow± pocztê zamawiali.
+przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy". Za
+bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±, jak±
+masow± pocztê zamawiali.
 
 %package client
 Summary:	Tools to access a DCC server
@@ -82,9 +82,9 @@ antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
 
 DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
 zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
-przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy".
-Za bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±,
-jak± masow± pocztê zamawiali.
+przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy". Za
+bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±, jak±
+masow± pocztê zamawiali.
 
 %package server
 Summary:	DCC Server
@@ -118,9 +118,9 @@ antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
 
 DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
 zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
-przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy".
-Za bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±,
-jak± masow± pocztê zamawiali.
+przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy". Za
+bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±, jak±
+masow± pocztê zamawiali.
 
 %package cgi
 Summary:	CGI scripts for managing mail delivery on a DCC enabled server
@@ -266,7 +266,7 @@ fi
 %doc dbclean.html dblist.html dccd.html dcc.html dccproc.html
 %doc dccsight.html homedir/flod homedir/ids homedir/map.txt homedir/README
 %doc misc/dcc.m4 misc/dccdnsbl.m4 misc/hackmc
-#%doc dccm.html 
+#%doc dccm.html
 %dir %{dccdir}
 %dir %{dccdir}/log
 %dir %{dccdir}/userdirs/local
@@ -274,13 +274,13 @@ fi
 %dir %{dccdir}/userdirs/procmail
 %dir %{dccdir}/userdirs/esmtp
 %dir /var/run/dcc
-%config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_conf
-%config(noreplace) %verify(not size mtime md5) %{dccdir}/whiteclnt
-%config(noreplace) %verify(not size mtime md5) %{dccdir}/whitecommon
-%config(noreplace) %verify(not size mtime md5) %{dccdir}/whitelist
-%config(noreplace) %verify(not size mtime md5) %{dccdir}/ids
-%config(noreplace) %verify(not size mtime md5) %{dccdir}/flod
-%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{dccdir}/map
+%config(noreplace) %verify(not md5 mtime size) %{dccdir}/dcc_conf
+%config(noreplace) %verify(not md5 mtime size) %{dccdir}/whiteclnt
+%config(noreplace) %verify(not md5 mtime size) %{dccdir}/whitecommon
+%config(noreplace) %verify(not md5 mtime size) %{dccdir}/whitelist
+%config(noreplace) %verify(not md5 mtime size) %{dccdir}/ids
+%config(noreplace) %verify(not md5 mtime size) %{dccdir}/flod
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{dccdir}/map
 #%config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_db
 #%config(noreplace) %verify(not size mtime md5) %{dccdir}/dcc_db.hash
 %{dccdir}/map.txt
