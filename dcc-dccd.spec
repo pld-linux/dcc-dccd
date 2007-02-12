@@ -1,5 +1,5 @@
 Summary:	Distributed Checksum Clearinghouse, anti-spam tool
-Summary(pl):	Narzêdzie anty-spamowe bazuj±ce na sumach kontrolnych (DCC)
+Summary(pl.UTF-8):   NarzÄ™dzie anty-spamowe bazujÄ…ce na sumach kontrolnych (DCC)
 Name:		dcc-dccd
 Version:	1.2.50
 Release:	1
@@ -35,24 +35,24 @@ from sources in a "white list." White lists are generally the
 responsibility of DCC clients, since only they know which bulk mail
 they solicited.
 
-%description -l pl
+%description -l pl.UTF-8
 DCC (Distributed Checksum Clearinghouse) jest kooperatywnym,
-rozproszonym systemem maj±cym na celu wykrywanie masowej poczty lub
-poczty wys³anej do wielu ludzi. Pozwala jednostkom otrzymuj±cym
-pojedynczy list okre¶liæ, jak wielu innych otrzyma³o dok³adnie
-identyczne kopie tej wiadomo¶ci i na tej podstawie odrzuciæ j±. Mo¿e
-zidentyfikowaæ niechcian± masow± pocztê przy u¿yciu "pu³apek
+rozproszonym systemem majÄ…cym na celu wykrywanie masowej poczty lub
+poczty wysÅ‚anej do wielu ludzi. Pozwala jednostkom otrzymujÄ…cym
+pojedynczy list okreÅ›liÄ‡, jak wielu innych otrzymaÅ‚o dokÅ‚adnie
+identyczne kopie tej wiadomoÅ›ci i na tej podstawie odrzuciÄ‡ jÄ…. MoÅ¼e
+zidentyfikowaÄ‡ niechcianÄ… masowÄ… pocztÄ™ przy uÅ¼yciu "puÅ‚apek
 antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
 
-DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
-zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
-przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy". Za
-bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±, jak±
-masow± pocztê zamawiali.
+DCC moÅ¼na odbieraÄ‡ jako narzÄ™dzie dla uÅ¼ytkownikÃ³w koÅ„cowych,
+zapewniajÄ…ce im prawo do przeciwstawienia siÄ™ zalewowi masowej poczty
+przez odrzucenie wszystkich Å›mieci oprÃ³cz ÅºrÃ³deÅ‚ z "biaÅ‚ej listy". Za
+biaÅ‚e listy odpowiadajÄ… klienci DCC, jako Å¼e tylko oni wiedzÄ…, jakÄ…
+masowÄ… pocztÄ™ zamawiali.
 
 %package client
 Summary:	Tools to access a DCC server
-Summary(pl):	Narzêdzia dostêpowe dla serwera DCC
+Summary(pl.UTF-8):   NarzÄ™dzia dostÄ™powe dla serwera DCC
 Group:		Networking
 Requires:	%{name} = %{version}-%{release}
 
@@ -71,24 +71,24 @@ from sources in a "white list." White lists are generally the
 responsibility of DCC clients, since only they know which bulk mail
 they solicited.
 
-%description client -l pl
+%description client -l pl.UTF-8
 DCC (Distributed Checksum Clearinghouse) jest kooperatywnym,
-rozproszonym systemem maj±cym na celu wykrywanie masowej poczty lub
-poczty wys³anej do wielu ludzi. Pozwala jednostkom otrzymuj±cym
-pojedynczy list okre¶liæ, jak wielu innych otrzyma³o dok³adnie
-identyczne kopie tej wiadomo¶ci i na tej podstawie odrzuciæ j±. Mo¿e
-zidentyfikowaæ niechcian± masow± pocztê przy u¿yciu "pu³apek
+rozproszonym systemem majÄ…cym na celu wykrywanie masowej poczty lub
+poczty wysÅ‚anej do wielu ludzi. Pozwala jednostkom otrzymujÄ…cym
+pojedynczy list okreÅ›liÄ‡, jak wielu innych otrzymaÅ‚o dokÅ‚adnie
+identyczne kopie tej wiadomoÅ›ci i na tej podstawie odrzuciÄ‡ jÄ…. MoÅ¼e
+zidentyfikowaÄ‡ niechcianÄ… masowÄ… pocztÄ™ przy uÅ¼yciu "puÅ‚apek
 antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
 
-DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
-zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
-przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy". Za
-bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±, jak±
-masow± pocztê zamawiali.
+DCC moÅ¼na odbieraÄ‡ jako narzÄ™dzie dla uÅ¼ytkownikÃ³w koÅ„cowych,
+zapewniajÄ…ce im prawo do przeciwstawienia siÄ™ zalewowi masowej poczty
+przez odrzucenie wszystkich Å›mieci oprÃ³cz ÅºrÃ³deÅ‚ z "biaÅ‚ej listy". Za
+biaÅ‚e listy odpowiadajÄ… klienci DCC, jako Å¼e tylko oni wiedzÄ…, jakÄ…
+masowÄ… pocztÄ™ zamawiali.
 
 %package server
 Summary:	DCC Server
-Summary(pl):	Serwer DCC
+Summary(pl.UTF-8):   Serwer DCC
 Group:		Networking
 Requires:	%{name} = %{version}-%{release}
 
@@ -107,24 +107,24 @@ from sources in a "white list." White lists are generally the
 responsibility of DCC clients, since only they know which bulk mail
 they solicited.
 
-%description server -l pl
+%description server -l pl.UTF-8
 DCC (Distributed Checksum Clearinghouse) jest kooperatywnym,
-rozproszonym systemem maj±cym na celu wykrywanie masowej poczty lub
-poczty wys³anej do wielu ludzi. Pozwala jednostkom otrzymuj±cym
-pojedynczy list okre¶liæ, jak wielu innych otrzyma³o dok³adnie
-identyczne kopie tej wiadomo¶ci i na tej podstawie odrzuciæ j±. Mo¿e
-zidentyfikowaæ niechcian± masow± pocztê przy u¿yciu "pu³apek
+rozproszonym systemem majÄ…cym na celu wykrywanie masowej poczty lub
+poczty wysÅ‚anej do wielu ludzi. Pozwala jednostkom otrzymujÄ…cym
+pojedynczy list okreÅ›liÄ‡, jak wielu innych otrzymaÅ‚o dokÅ‚adnie
+identyczne kopie tej wiadomoÅ›ci i na tej podstawie odrzuciÄ‡ jÄ…. MoÅ¼e
+zidentyfikowaÄ‡ niechcianÄ… masowÄ… pocztÄ™ przy uÅ¼yciu "puÅ‚apek
 antyspamowych" i innych wykrywaczy, ale to nie jest podstawowym celem.
 
-DCC mo¿na odbieraæ jako narzêdzie dla u¿ytkowników koñcowych,
-zapewniaj±ce im prawo do przeciwstawienia siê zalewowi masowej poczty
-przez odrzucenie wszystkich ¶mieci oprócz ¼róde³ z "bia³ej listy". Za
-bia³e listy odpowiadaj± klienci DCC, jako ¿e tylko oni wiedz±, jak±
-masow± pocztê zamawiali.
+DCC moÅ¼na odbieraÄ‡ jako narzÄ™dzie dla uÅ¼ytkownikÃ³w koÅ„cowych,
+zapewniajÄ…ce im prawo do przeciwstawienia siÄ™ zalewowi masowej poczty
+przez odrzucenie wszystkich Å›mieci oprÃ³cz ÅºrÃ³deÅ‚ z "biaÅ‚ej listy". Za
+biaÅ‚e listy odpowiadajÄ… klienci DCC, jako Å¼e tylko oni wiedzÄ…, jakÄ…
+masowÄ… pocztÄ™ zamawiali.
 
 %package cgi
 Summary:	CGI scripts for managing mail delivery on a DCC enabled server
-Summary(pl):	Skrypty CGI do obs³ugi dostarczania poczty na serwerze DCC
+Summary(pl.UTF-8):   Skrypty CGI do obsÅ‚ugi dostarczania poczty na serwerze DCC
 Group:		Networking
 Requires:	%{name} = %{version}-%{release}
 
@@ -137,14 +137,14 @@ by dcc).
 
 NB these scripts need configured after installation.
 
-%description cgi -l pl
-Przyk³adowy zestaw skryptów CGI pozwalaj±cych u¿ytkownikom na klikane
-zarz±dzenie ich bia³ymi listami DCC, a wiêc i tym, co dostaj±. Pozwala
-przykrywaæ listy dotycz±ce serwera. Skrypty daj± dostêp do bia³ych
-list, które normalnie s± w zabezpieczonym katalogu (którego
-w³a¶cicielem jest DCC).
+%description cgi -l pl.UTF-8
+PrzykÅ‚adowy zestaw skryptÃ³w CGI pozwalajÄ…cych uÅ¼ytkownikom na klikane
+zarzÄ…dzenie ich biaÅ‚ymi listami DCC, a wiÄ™c i tym, co dostajÄ…. Pozwala
+przykrywaÄ‡ listy dotyczÄ…ce serwera. Skrypty dajÄ… dostÄ™p do biaÅ‚ych
+list, ktÃ³re normalnie sÄ… w zabezpieczonym katalogu (ktÃ³rego
+wÅ‚aÅ›cicielem jest DCC).
 
-Te skrypty wymagaj± konfiguracji po zainstalowaniu.
+Te skrypty wymagajÄ… konfiguracji po zainstalowaniu.
 
 %prep
 %setup -q
