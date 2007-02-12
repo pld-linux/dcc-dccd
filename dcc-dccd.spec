@@ -1,5 +1,5 @@
 Summary:	Distributed Checksum Clearinghouse, anti-spam tool
-Summary(pl.UTF-8):   Narzędzie anty-spamowe bazujące na sumach kontrolnych (DCC)
+Summary(pl.UTF-8):	Narzędzie anty-spamowe bazujące na sumach kontrolnych (DCC)
 Name:		dcc-dccd
 Version:	1.2.50
 Release:	1
@@ -52,7 +52,7 @@ masową pocztę zamawiali.
 
 %package client
 Summary:	Tools to access a DCC server
-Summary(pl.UTF-8):   Narzędzia dostępowe dla serwera DCC
+Summary(pl.UTF-8):	Narzędzia dostępowe dla serwera DCC
 Group:		Networking
 Requires:	%{name} = %{version}-%{release}
 
@@ -88,7 +88,7 @@ masową pocztę zamawiali.
 
 %package server
 Summary:	DCC Server
-Summary(pl.UTF-8):   Serwer DCC
+Summary(pl.UTF-8):	Serwer DCC
 Group:		Networking
 Requires:	%{name} = %{version}-%{release}
 
@@ -124,7 +124,7 @@ masową pocztę zamawiali.
 
 %package cgi
 Summary:	CGI scripts for managing mail delivery on a DCC enabled server
-Summary(pl.UTF-8):   Skrypty CGI do obsługi dostarczania poczty na serwerze DCC
+Summary(pl.UTF-8):	Skrypty CGI do obsługi dostarczania poczty na serwerze DCC
 Group:		Networking
 Requires:	%{name} = %{version}-%{release}
 
