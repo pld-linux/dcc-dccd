@@ -168,7 +168,7 @@ LDFLAGS="%{rpmldflags}"; export LDFLAGS
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_initrddir}
+install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{cron.daily,httpd}
 install -d $RPM_BUILD_ROOT/var/run/dcc
 install -d $RPM_BUILD_ROOT%{dccdir}/{log,userdirs/{local,esmtp,cyrus,procmail}}
@@ -195,7 +195,7 @@ INST_UID="$( id -u )" INST_GID="$( id -g )"; export INST_UID INST_GID
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}/man
 
 install misc/cron-dccd $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/dccd
-install misc/rcDCC $RPM_BUILD_ROOT%{_initrddir}/dccd
+install misc/rcDCC $RPM_BUILD_ROOT/etc/rc.d/init.d/dccd
 install homedir/flod $RPM_BUILD_ROOT%{dccdir}/flod
 
 # move some binaries in place, wierd stuff...
